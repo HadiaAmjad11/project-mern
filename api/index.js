@@ -1,17 +1,29 @@
+// index.js
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import userRouter from './routes/user.route.js';
+
 dotenv.config();
 
-mongoose.connect(process.env.MONGO).then(() => {
-    console.log("Mongoose DB Connected!!");
-}).catch((err) => {
-    console.log(err);
+const app = express();
+app.use(express.json());
+
+mongoose.connect(process.env.MONGO)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB error:", err));
+
+// Root test route
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
 });
 
-const app = express();
 
-app.listen (3000, () =>{
-    console.log('Server is running on port 3000');
-}
-);
+app.use("/api/user", userRouter);
+
+
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
