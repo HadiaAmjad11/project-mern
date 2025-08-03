@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signinStart, SignInSuccess, SignInFailure } from "../redux/user/userSlice";
-import OAuth from "../Components/OAuth.jsx"; 
-
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice"; 
+import OAuth from "../Components/OAuth.jsx";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -22,7 +21,7 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signinStart());
+    dispatch(signInStart()); // ✅ fixed
 
     try {
       const res = await fetch("/api/auth/signin", {
@@ -36,14 +35,14 @@ export default function SignIn() {
       const data = await res.json();
 
       if (!res.ok || data.success === false) {
-        dispatch(SignInFailure(data.message || "Sign in failed"));
+        dispatch(signInFailure(data.message || "Sign in failed")); // ✅ fixed
         return;
       }
 
-      dispatch(SignInSuccess(data.user || data));
+      dispatch(signInSuccess(data.user || data)); // ✅ fixed
       navigate("/");
     } catch (error) {
-      dispatch(SignInFailure(error.message || "Request failed"));
+      dispatch(signInFailure(error.message || "Request failed")); // ✅ fixed
     }
   };
 
@@ -73,7 +72,7 @@ export default function SignIn() {
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
-        <OAuth/>
+        <OAuth />
       </form>
 
       <div className="flex gap-2 mt-5">
