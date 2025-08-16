@@ -5,7 +5,8 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
 import Header from './Components/Header';
-import PrivateRoute from './Components/PrivateRoute';
+import PrivateRoute
+ from './Components/PrivateRoute';
 
 export default function App() {
   return (
