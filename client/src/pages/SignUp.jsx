@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../Components/OAuth";
 
-
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
@@ -10,30 +9,25 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const updatedData = {
+    setFormData({
       ...formData,
       [e.target.id]: e.target.value,
-    };
-    setFormData(updatedData);
-    console.log("Updated Form Data:", updatedData);
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
+    try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.success === false) {
         setError(data.message);
@@ -42,12 +36,11 @@ export default function SignUp() {
       }
 
       setLoading(false);
-      // TODO: handle success, e.g., redirect or message
-setError(null);
-navigate('/signin');
-    } catch (error) {
+      setError(null);
+      navigate("/sign-in"); // matches App.jsx
+    } catch (err) {
       setLoading(false);
-      setError(error.message);
+      setError(err.message);
     }
   };
 
@@ -87,7 +80,7 @@ navigate('/signin');
 
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
-        <Link to="/signin" className="text-blue-700">Sign in</Link>
+        <Link to="/sign-in" className="text-blue-700">Sign In</Link>
       </div>
 
       {error && <p className="text-red-500 mt-5">{error}</p>}

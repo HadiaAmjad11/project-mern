@@ -1,5 +1,3 @@
-// src/pages/SignIn.jsx
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,28 +19,26 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signInStart()); // ✅ fixed
+    dispatch(signInStart());
 
     try {
       const res = await fetch("/api/auth/signin", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
 
       if (!res.ok || data.success === false) {
-        dispatch(signInFailure(data.message || "Sign in failed")); // ✅ fixed
+        dispatch(signInFailure(data.message || "Sign in failed"));
         return;
       }
 
-      dispatch(signInSuccess(data.user || data)); // ✅ fixed
+      dispatch(signInSuccess(data.user || data));
       navigate("/");
-    } catch (error) {
-      dispatch(signInFailure(error.message || "Request failed")); // ✅ fixed
+    } catch (err) {
+      dispatch(signInFailure(err.message || "Request failed"));
     }
   };
 
@@ -77,7 +73,7 @@ export default function SignIn() {
 
       <div className="flex gap-2 mt-5">
         <p>Don't have an account?</p>
-        <Link to="/signup" className="text-blue-700">Sign Up</Link>
+        <Link to="/sign-up" className="text-blue-700">Sign Up</Link>
       </div>
 
       {error && <p className="text-red-500 mt-5">{error}</p>}
