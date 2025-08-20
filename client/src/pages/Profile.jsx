@@ -19,7 +19,7 @@ export default function Profile() {
             accept="image/*"
           />
 
-          {/* Profile Image */}
+          
           <img
             onClick={() => fileRef.current.click()}
             src={currentUser?.avatar || "/default-avatar.png"}
@@ -27,7 +27,7 @@ export default function Profile() {
             className="rounded-full h-24 w-24 object-cover cursor-pointer self-center border"
           />
 
-          {/* User Info Inputs */}
+          
           <input
             type="text"
             defaultValue={currentUser?.username || ""}
@@ -38,6 +38,7 @@ export default function Profile() {
             type="email"
             defaultValue={currentUser?.email || ""}
             placeholder="Email"
+
             className="border p-3 rounded-lg"
           />
           <input
@@ -46,7 +47,7 @@ export default function Profile() {
             className="border p-3 rounded-lg"
           />
 
-          {/* Update Button */}
+          
           <button
             type="submit"
             className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-90"
@@ -55,7 +56,7 @@ export default function Profile() {
           </button>
         </form>
 
-        {/* Bottom Actions */}
+        
         <div className="flex justify-between mt-6 text-red-700 cursor-pointer">
           <span>Delete Account</span>
           <span>Sign Out</span>
